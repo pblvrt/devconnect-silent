@@ -10,7 +10,16 @@ import {
   createLocalAudioTrack,
 } from "livekit-client";
 import { QRCodeSVG } from "qrcode.react";
-import { Mic, MicOff, Volume2, Users, Copy, Check, QrCode, ExternalLink } from "lucide-react";
+import {
+  Mic,
+  MicOff,
+  Volume2,
+  Users,
+  Copy,
+  Check,
+  QrCode,
+  ExternalLink,
+} from "lucide-react";
 
 export default function BroadcastPage() {
   const searchParams = useSearchParams();
@@ -172,7 +181,11 @@ export default function BroadcastPage() {
   };
 
   const openQRCodeScreen = () => {
-    window.open(qrUrl, "_blank", "width=1200,height=800,scrollbars=yes,resizable=yes");
+    window.open(
+      qrUrl,
+      "_blank",
+      "width=1200,height=800,scrollbars=yes,resizable=yes"
+    );
   };
 
   const disconnect = async () => {
@@ -306,7 +319,7 @@ export default function BroadcastPage() {
                       </button>
                     </div>
                   </div>
-                  
+
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                       QR Code Screen
@@ -349,7 +362,7 @@ export default function BroadcastPage() {
               <p className="text-sm text-gray-600 text-center max-w-xs">
                 Scan this QR code to join the audio stream
               </p>
-              
+
               {/* QR Code Screen Button */}
               <button
                 onClick={openQRCodeScreen}
