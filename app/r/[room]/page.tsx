@@ -8,7 +8,19 @@ import {
   RemoteParticipant,
   RemoteAudioTrack,
 } from "livekit-client";
-import { Play, Pause, Volume2, VolumeX, Wifi, WifiOff } from "lucide-react";
+import {
+  Play,
+  Pause,
+  Volume2,
+  VolumeX,
+  Wifi,
+  WifiOff,
+  AlertTriangle,
+  RefreshCw,
+} from "lucide-react";
+import ErrorBoundary from "@/components/ErrorBoundary";
+import ConnectionStatus from "@/components/ConnectionStatus";
+import { useReconnection } from "@/hooks/useReconnection";
 
 export default function ListenerPage() {
   const params = useParams();
