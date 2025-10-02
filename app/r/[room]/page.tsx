@@ -34,6 +34,7 @@ export default function ListenerPage() {
     "connecting" | "connected" | "disconnected"
   >("connecting");
   const [error, setError] = useState<string | null>(null);
+  const [isIOS, setIsIOS] = useState(false);
 
   const roomRef = useRef<Room | null>(null);
   const audioElementRef = useRef<HTMLAudioElement | null>(null);
@@ -47,6 +48,15 @@ export default function ListenerPage() {
       }
     };
   }, [roomSlug]);
+
+  // Detect iOS for autoplay hinting
+  useEffect(() => {
+    if (typeof navigator !== "undefined") {
+      const ua = navigator.userAgent || "";
+      const iOSLike = /iPhone|iPad|iPod|iOS|Macintosh;.*Mobile/.test(ua);
+      setIsIOS(iOSLike);
+    }
+  }, []);
 
   const connectToRoom = async () => {
     try {
@@ -83,13 +93,8 @@ export default function ListenerPage() {
           audioElement.volume = volume;
           audioElement.muted = isMuted;
 
-          // Auto-play with user gesture fallback
-          audioElement.play().catch((error) => {
-            console.log("Autoplay prevented:", error);
-            // Show play button for user interaction
-          });
-
-          setIsPlaying(true);
+          // Do not autoplay on mobile; wait for explicit user interaction
+          setIsPlaying(false);
         }
       });
 
@@ -210,6 +215,14 @@ export default function ListenerPage() {
           {/* Audio Controls */}
           {isConnected && (
             <div className="space-y-6">
+              {!isPlaying && (
+                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                  <p className="text-sm text-yellow-800 text-center">
+                    Tap the button below to start listening
+                    {isIOS ? ". On iOS, media playback requires a tap." : "."}
+                  </p>
+                </div>
+              )}
               {/* Play/Pause Button */}
               <div className="flex justify-center">
                 <button
